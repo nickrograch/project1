@@ -5,7 +5,7 @@
     <title>Solo Project</title>
 </head>
 <body>
-<form action = "/userlist" method="post">
+<form action = "/" method="post">
     Choose the database connection type
     <select name = "connectionType">
         <option value="hibernate">hibernate</option>

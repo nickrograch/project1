@@ -24,6 +24,12 @@ public class User {
     public User() {
     }
 
+    public User(String name, String surname, String fatherName) {
+        this.name = name;
+        this.surname = surname;
+        this.fatherName = fatherName;
+    }
+
     public String getSurname() {
         return surname;
     }
