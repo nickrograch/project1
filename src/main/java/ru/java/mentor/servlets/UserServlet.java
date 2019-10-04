@@ -3,6 +3,7 @@ package ru.java.mentor.servlets;
 import ru.java.mentor.DAOFactory.AbstractDAOFactory;
 import ru.java.mentor.DAOFactory.DAO;
 import ru.java.mentor.model.User;
+import ru.java.mentor.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAO dao = AbstractDAOFactory.getDAO();
         response.setContentType("text/html");
         String idString = request.getParameter("id");
         String submit = request.getParameter("submit");
@@ -28,18 +28,18 @@ public class UserServlet extends HttpServlet {
 
         if (delete != null) {
             id = Long.parseLong(idString);
-            User user = dao.getUserById(id);
+            User user = UserService.getInstance().getUserById(id);
             if (user != null) {
-                dao.deleteUser(user);
+                UserService.getInstance().deleteUser(user);
             }
         }
         if (edit != null) {
             id = Long.parseLong(idString);
-            User user = dao.getUserById(id);
+            User user = UserService.getInstance().getUserById(id);
             request.setAttribute("userEdit", user);
         }
 
-        List<User> list = dao.getAllUsers();
+        List<User> list = UserService.getInstance().getAllUsers();
         request.setAttribute("list", list);
         request.getRequestDispatcher(page).forward(request, response);
     }
@@ -55,16 +55,15 @@ public class UserServlet extends HttpServlet {
         final String action = req.getParameter("action");
 
         if (requestIsValid(name, surname, fathername)) {
-            DAO dao = AbstractDAOFactory.getDAO();
             final User user = new User(name, surname, fathername);
 
             if (action != null) {
                 if (action.equalsIgnoreCase("add")) {
-                    dao.addUser(user);
+                    UserService.getInstance().addUser(user);
                 }
                 if (action.equalsIgnoreCase("edit")) {
                     user.setId(Long.parseLong(idSting));
-                    dao.editUser(user);
+                    UserService.getInstance().editUser(user);
                 }
             }
         }

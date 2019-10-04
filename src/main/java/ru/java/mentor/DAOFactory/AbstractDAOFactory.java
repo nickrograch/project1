@@ -18,11 +18,9 @@ public class AbstractDAOFactory {
         return abstractDAOFactory;
     }
 
-    public static DAO getDAO() {
+    public static DAO getDAO(Session session) {
         if (PropertyReader.getInstacne().getConnection().equals("hibernate")) {
-            dao = new HibernateDAO();
-
-
+            dao = new HibernateDAO(session);
         } else {
             dao = new JdbcDAO();
         }

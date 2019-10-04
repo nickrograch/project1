@@ -59,7 +59,9 @@ public class DbHelper {
 
             url.
                     append(PropertyReader.read("url")).
+                    append("?user=").
                     append(PropertyReader.read("username")).
+                    append("&password=").
                     append(PropertyReader.read("password"));
 
             System.out.println("URL: " + url + "\n");
