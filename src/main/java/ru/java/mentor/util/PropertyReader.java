@@ -2,11 +2,13 @@ package ru.java.mentor.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
 
     private static PropertyReader propertyReader;
+    private static final String propertiesFile = "db.properties";
 
     String connection;
 
@@ -25,12 +27,17 @@ public class PropertyReader {
         return propertyReader;
     }
 
-    public String read(String key) throws IOException {
+    public static String read(String key)  throws ReaderException {
         Properties properties = new Properties();
         String property;
-        FileInputStream in = new FileInputStream("D:\\JavaMentors\\project1\\src\\main\\resources\\db.properties");
-        properties.load(in);
-        property = properties.getProperty(key);
-        return property;
+        try {
+            InputStream stream = PropertyReader.class.getClassLoader().getResourceAsStream(propertiesFile);
+            properties.load(stream);
+            property = properties.getProperty(key);
+            return property;
+        }
+        catch (IOException e){
+            throw new ReaderException("Properties file not found");
+        }
     }
 }

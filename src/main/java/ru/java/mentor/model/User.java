@@ -19,15 +19,21 @@ public class User {
     private String surname;
 
     @Column(name = "fathername")
-    private String fatherName;
+    private String fathername;
 
     public User() {
     }
 
-    public User(String name, String surname, String fatherName) {
+    public User(String name, String surname, String fathername) {
         this.name = name;
         this.surname = surname;
-        this.fatherName = fatherName;
+        this.fathername = fathername;
+    }
+
+    public User(long id, String name, String surname, String fathername) {
+        this.name = name;
+        this.surname = surname;
+        this.fathername = fathername;
     }
 
     public String getSurname() {
@@ -38,12 +44,12 @@ public class User {
         this.surname = surname;
     }
 
-    public String getFatherName() {
-        return fatherName;
+    public String getFathername() {
+        return fathername;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
+    public void setFathername(String fathername) {
+        this.fathername = fathername;
     }
 
     public Long getId() {
@@ -70,12 +76,12 @@ public class User {
         return id.equals(user.id) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&
-                Objects.equals(fatherName, user.fatherName);
+                Objects.equals(fathername, user.fathername);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, fatherName);
+        return Objects.hash(id, name, surname, fathername);
     }
 
     @Override
@@ -84,7 +90,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", fatherName='" + fatherName + '\'' +
+                ", fatherName='" + fathername + '\'' +
                 '}';
     }
 }

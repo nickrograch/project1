@@ -6,7 +6,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import ru.java.mentor.model.User;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -19,28 +18,32 @@ public class DbHelper {
     private DbHelper() {}
 
 
-    public static SessionFactory getSessionFactory() throws IOException {
+    public static SessionFactory getSessionFactory()  {
         if (sessionFactory == null) {
-            sessionFactory = createSessionFactory();
+            try {
+                sessionFactory = createSessionFactory();
+            } catch (ReaderException e) {
+                e.printStackTrace();
+            }
         }
         return sessionFactory;
     }
 
 
-    private static Configuration getConfiguration () throws IOException {
+    private static Configuration getConfiguration () throws ReaderException {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         configuration.addAnnotatedClass(User.class);
-        configuration.setProperty("hibernate.dialect", PropertyReader.getInstacne().read("dialect"));
-        configuration.setProperty("hibernate.connection.driver_class", PropertyReader.getInstacne().read("driver"));
-        configuration.setProperty("hibernate.connection.url", PropertyReader.getInstacne().read("url"));
-        configuration.setProperty("hibernate.connection.username", PropertyReader.getInstacne().read("username"));
-        configuration.setProperty("hibernate.connection.password", PropertyReader.getInstacne().read("password"));
-        configuration.setProperty("hibernate.show_sql", PropertyReader.getInstacne().read("show_sql"));
-        configuration.setProperty("hibernate.hbm2ddl.auto", PropertyReader.getInstacne().read("hbm2ddl"));
+        configuration.setProperty("hibernate.dialect", PropertyReader.read("dialect"));
+        configuration.setProperty("hibernate.connection.driver_class", PropertyReader.read("driver"));
+        configuration.setProperty("hibernate.connection.url", PropertyReader.read("url"));
+        configuration.setProperty("hibernate.connection.username", PropertyReader.read("username"));
+        configuration.setProperty("hibernate.connection.password", PropertyReader.read("password"));
+        configuration.setProperty("hibernate.show_sql", PropertyReader.read("show_sql"));
+        configuration.setProperty("hibernate.hbm2ddl.auto", PropertyReader.read("hbm2ddl"));
         return configuration;
     }
 
-    private static SessionFactory createSessionFactory() throws IOException {
+    private static SessionFactory createSessionFactory() throws ReaderException {
         Configuration configuration = getConfiguration();
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
@@ -50,20 +53,19 @@ public class DbHelper {
 
     public static Connection getJDBCConnection(){
         try {
-            DriverManager.registerDriver((Driver) Class.forName(PropertyReader.getInstacne().read("driver")).newInstance());
+            DriverManager.registerDriver((Driver) Class.forName(PropertyReader.read("driver")).newInstance());
 
             StringBuilder url = new StringBuilder();
 
             url.
-                    append(PropertyReader.getInstacne().read("url")).
-                    append(PropertyReader.getInstacne().read("username")).
-                    append(PropertyReader.getInstacne().read("password"));
+                    append(PropertyReader.read("url")).
+                    append(PropertyReader.read("username")).
+                    append(PropertyReader.read("password"));
 
             System.out.println("URL: " + url + "\n");
 
-            Connection connection = DriverManager.getConnection(url.toString());
-            return connection;
-        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException | IOException e) {
+            return DriverManager.getConnection(url.toString());
+        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException | ReaderException e) {
             e.printStackTrace();
             throw new IllegalStateException();
         }
