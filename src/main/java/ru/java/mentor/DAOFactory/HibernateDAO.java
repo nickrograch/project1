@@ -11,7 +11,7 @@ public class HibernateDAO implements DAO {
 
     private Session session;
 
-    public HibernateDAO(Session session) {
+    HibernateDAO(Session session) {
         this.session = session;
     }
 

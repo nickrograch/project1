@@ -1,5 +1,6 @@
 package ru.java.mentor.service;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,10 +33,17 @@ public class UserService {
     public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        DAO dao = AbstractDAOFactory.getDAO(session);
-        List<User> list =  dao.getAllUsers();
-        session.getTransaction().commit();
-        session.close();
+        List<User> list = null;
+        try{
+            DAO dao = AbstractDAOFactory.getDAO(session);
+            list =  dao.getAllUsers();
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (HibernateException e){
+            session.getTransaction().rollback();
+            session.close();
+        }
         return list;
     }
 

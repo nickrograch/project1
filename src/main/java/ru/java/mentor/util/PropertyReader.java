@@ -20,7 +20,7 @@ public class PropertyReader {
         this.connection = connection;
     }
 
-    public static PropertyReader getInstacne(){
+    public static PropertyReader getInstance(){
         if (propertyReader == null){
             propertyReader = new PropertyReader();
         }

@@ -1,6 +1,5 @@
 package ru.java.mentor.servlets;
 
-import ru.java.mentor.util.DbHelper;
 import ru.java.mentor.util.PropertyReader;
 import ru.java.mentor.util.ReaderException;
 
@@ -23,7 +22,7 @@ public class ConnectionTypeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String connectionType = req.getParameter("connectionType");
         try {
-            PropertyReader.getInstacne().setConnection(PropertyReader.read(connectionType));
+            PropertyReader.getInstance().setConnection(PropertyReader.read(connectionType));
         } catch (ReaderException e) {
             e.printStackTrace();
         }

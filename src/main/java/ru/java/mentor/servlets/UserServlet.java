@@ -21,7 +21,6 @@ public class UserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         String idString = request.getParameter("id");
-        String submit = request.getParameter("submit");
         String edit = request.getParameter("edit");
         String delete = request.getParameter("delete");
         long id;
