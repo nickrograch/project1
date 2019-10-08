@@ -49,12 +49,12 @@ public class UserServlet extends HttpServlet {
 
         final String idSting = req.getParameter("id");
         final String name = req.getParameter("name");
-        final String surname = req.getParameter("surname");
-        final String fathername = req.getParameter("fathername");
+        final String password = req.getParameter("password");
+        final String role = req.getParameter("role");
         final String action = req.getParameter("action");
 
-        if (requestIsValid(name, surname, fathername)) {
-            final User user = new User(name, surname, fathername);
+        if (requestIsValid(name, password, role)) {
+            final User user = new User(name, password, role);
 
             if (action != null) {
                 if (action.equalsIgnoreCase("add")) {
@@ -69,9 +69,9 @@ public class UserServlet extends HttpServlet {
         doGet(req, resp);
     }
 
-    private boolean requestIsValid(String name, String surname, String fathername) {
+    private boolean requestIsValid(String name, String password, String role) {
         return name != null && !name.isEmpty() &&
-                surname != null && !surname.isEmpty() &&
-                fathername != null && !fathername.isEmpty();
+                password != null && !password.isEmpty() &&
+                role != null && !role.isEmpty();
     }
 }

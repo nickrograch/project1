@@ -10,7 +10,7 @@ public class PropertyReader {
     private static PropertyReader propertyReader;
     private static final String propertiesFile = "db.properties";
 
-    String connection;
+    String connection = "hibernate";
 
     public String getConnection() {
         return connection;

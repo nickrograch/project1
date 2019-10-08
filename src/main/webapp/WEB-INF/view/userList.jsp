@@ -19,12 +19,12 @@
             <td><input type='text' name='name' maxlength='50' size='20' value= ${userEdit.name}></td>
         </tr>
         <tr>
-            <td align='right'>Фамилия</td>
-            <td><input type='text' name='surname' maxlength='50' size='20' value=${userEdit.surname}></td>
+            <td align='right'>Пароль</td>
+            <td><input type='text' name="password" maxlength='50' size='20' value=${userEdit.password}></td>
         </tr>
         <tr>
-            <td align='right'>Отчество</td>
-            <td><input type='text' name='fathername' maxlength='50' size='20' value=${userEdit.fathername}></td>
+            <td align='right'>Роль</td>
+            <td><input type='text' name='role' maxlength='50' size='20' value=${userEdit.role}></td>
         </tr>
     </table>
     <input type='submit' value='Подтвердить' name='Ok'><br>
@@ -36,15 +36,15 @@
     <tr>
         <th>Id</th>
         <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Отчество</th>
+        <th>Пароль</th>
+        <th>Роль</th>
     </tr>
     <c:forEach items="${requestScope.list}" var="user">
         <tr>
             <td> ${user.id} </td>
             <td> ${user.name} </td>
-            <td> ${user.surname} </td>
-            <td> ${user.fathername} </td>
+            <td> ${user.password} </td>
+            <td> ${user.role} </td>
             <td>
                 <form method="get">
                     <input type="submit" value="Изменить" name="edit">

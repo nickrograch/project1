@@ -44,4 +44,13 @@ public class HibernateDAO implements DAO {
         User user = (User) query.uniqueResult();
         return user;
     }
+
+    @Override
+    public User findUser(String name, String password){
+        Query query = session.createQuery("from User where name=:name and password=:password");
+        query.setParameter("name", name);
+        query.setParameter("password", password);
+        User user = (User) query.uniqueResult();
+        return user;
+    }
 }

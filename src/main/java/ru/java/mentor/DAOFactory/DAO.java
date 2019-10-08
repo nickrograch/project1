@@ -14,4 +14,6 @@ public interface DAO {
     void deleteUser(User user);
 
     User getUserById(Long id);
+
+    User findUser(String name, String password);
 }
