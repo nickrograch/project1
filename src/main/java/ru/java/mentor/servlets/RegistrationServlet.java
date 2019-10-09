@@ -2,6 +2,8 @@ package ru.java.mentor.servlets;
 
 import ru.java.mentor.model.User;
 import ru.java.mentor.service.UserService;
+import ru.java.mentor.util.PropertyReader;
+import ru.java.mentor.util.ReaderException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +18,11 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(page).forward(request, response);
+        try {
+            request.getRequestDispatcher(PropertyReader.read("registration")).forward(request, response);
+        } catch (ReaderException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

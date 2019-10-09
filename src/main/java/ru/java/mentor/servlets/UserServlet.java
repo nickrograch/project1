@@ -4,6 +4,8 @@ import ru.java.mentor.DAOFactory.AbstractDAOFactory;
 import ru.java.mentor.DAOFactory.DAO;
 import ru.java.mentor.model.User;
 import ru.java.mentor.service.UserService;
+import ru.java.mentor.util.PropertyReader;
+import ru.java.mentor.util.ReaderException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,6 @@ import java.util.List;
 
 @WebServlet("/userlist")
 public class UserServlet extends HttpServlet {
-    private final String page = "/WEB-INF/view/userList.jsp";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +41,11 @@ public class UserServlet extends HttpServlet {
 
         List<User> list = UserService.getInstance().getAllUsers();
         request.setAttribute("list", list);
-        request.getRequestDispatcher(page).forward(request, response);
+        try {
+            request.getRequestDispatcher(PropertyReader.read("userList")).forward(request, response);
+        } catch (ReaderException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

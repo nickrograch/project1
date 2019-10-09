@@ -2,6 +2,8 @@ package ru.java.mentor.servlets;
 
 import ru.java.mentor.model.User;
 import ru.java.mentor.service.UserService;
+import ru.java.mentor.util.PropertyReader;
+import ru.java.mentor.util.ReaderException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +15,14 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private final String page = "/WEB-INF/view/login.jsp";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(page).forward(request, response);
+        try {
+            request.getRequestDispatcher(PropertyReader.read("login")).forward(request, response);
+        } catch (ReaderException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
